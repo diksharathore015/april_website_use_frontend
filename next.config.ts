@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     
     domains: [         
       "127.0.0.1"  ,
-     
+     "43.204.144.192",
       "rdabucket.s3.amazonaws.com"
     ],
   },  
