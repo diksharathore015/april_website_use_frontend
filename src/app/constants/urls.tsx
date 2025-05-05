@@ -1,9 +1,10 @@
 export class Constants {
   // static API_URL = "http://127.0.0.1:8000";
-  static API_URL = "http://43.204.144.192:8002/";
+  static API_URL = "http://13.203.78.165:8002/";
 
-  
   static course = `${this.API_URL}/courses`;
+  static seo = `${this.API_URL}/seo/`;
+
   static courses_title = `${this.API_URL}/courses_title`;
   static studentslist = `${this.API_URL}/studentslist`;
   static allstudentslist = `${this.API_URL}/allstudentslist`;

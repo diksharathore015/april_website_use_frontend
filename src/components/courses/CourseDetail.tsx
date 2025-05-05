@@ -1,7 +1,8 @@
+"use client";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { FaTv, FaCertificate } from "react-icons/fa";
 import { MdOutlineOndemandVideo } from "react-icons/md";
 import CourseContent from "./CourseContent";
@@ -9,12 +10,16 @@ import StudentList from "./StudentList";
 import Course_locations from "./Course_locations";
 import EnquiryBox from "./EnquiryBox";
 import Reviews from "./Reviews";
+import Breadcrumbs from "../home/Breadcrumbs";
+import { usePathname, useRouter } from "next/navigation";
 
 const CourseDetail = ({ course, allCourses, reviewData, slug }: any) => {
   console.log("slug", slug, course);
+  const [locationType, setLocationType] = useState<any>("India");
   const location = slug[1] || "";
+  const newLocation = locationType?.matchedItem?.title.replaceAll("-", " ");
   const findMatchingState = () => {
-    const matchedState = course?.state.find(
+    const matchedState = course?.state?.find(
       (item: any) =>
         decodeURIComponent(item?.state_name.toLowerCase()).replace(" ", "") ===
         location
@@ -23,11 +28,11 @@ const CourseDetail = ({ course, allCourses, reviewData, slug }: any) => {
       return {
         type: "state",
         matchedItem: matchedState,
-        title: matchedState.state_name,
+        title: matchedState?.state_name,
       };
     const matchedCity =
       course &&
-      course?.city.find(
+      course?.city?.find(
         (item: any) =>
           decodeURIComponent(item?.city_name.toLowerCase()).replace(" ", "") ===
           location
@@ -36,7 +41,7 @@ const CourseDetail = ({ course, allCourses, reviewData, slug }: any) => {
     if (matchedCity) {
       // Find the state that corresponds to this city.
       // It is assumed that matchedCity.state holds the state ID.
-      const correspondingState = course?.state.find(
+      const correspondingState = course?.state?.find(
         (state: any) => state.id === matchedCity.state
       );
 
@@ -50,7 +55,7 @@ const CourseDetail = ({ course, allCourses, reviewData, slug }: any) => {
       };
     }
 
-    const matchedLocality: any = course?.locality.find(
+    const matchedLocality: any = course?.locality?.find(
       (item: any) =>
         decodeURIComponent(item?.locality_name.toLowerCase())
           .replace(" ", "")
@@ -62,7 +67,7 @@ const CourseDetail = ({ course, allCourses, reviewData, slug }: any) => {
 
     if (matchedLocality) {
       // Assume each locality object has a "city" property containing the city ID
-      const correspondingCity = course.city.find(
+      const correspondingCity = course?.city?.find(
         (city: any) => city.id == matchedLocality.city
       );
       // console.log("correspondingCity", correspondingCity);
@@ -87,7 +92,6 @@ const CourseDetail = ({ course, allCourses, reviewData, slug }: any) => {
 
     return {
       type: "none",
-
       title: "india",
     }; // Return null if no match is found
   };
@@ -105,10 +109,71 @@ const CourseDetail = ({ course, allCourses, reviewData, slug }: any) => {
       : "0.0";
 
   // const totalStudents = course.students ? course.students.length : 0;
-
+  const router = useRouter();
+  const pathname = usePathname();
+  const pathSegments: any = pathname?.split("/").filter(Boolean);
+  const [currentLocation, setCurrentLocation] = useState<any>(
+    pathSegments?.length > 2
+      ? pathSegments[2]
+      : pathSegments?.length < 2
+      ? pathSegments[1]
+      : "india"
+  );
+  const [randomTitle, setRandomTitle] = useState(
+    currentLocation ? "" : course?.title ?? "Royal Defence Academy"
+  );
   return (
     <div className="bg-[#e8e8e8]">
       <div className="bg-white   max-w-[75%] mx-auto text-white min-h-screen mt-36 relative">
+        <Breadcrumbs
+          location={locationdata}
+          imagearr={course.slider_images}
+          coursemaintitle={course?.title
+            .replaceAll(
+              /(?:\{location\}|\{Location\}|\{royal defence \})/g,
+              `${locationType?.matchedItem?.title ? newLocation : "india"}`
+            )
+            .replaceAll(
+              /(?:\{State\}|\{state\}|\{royal defence \})/g,
+
+              `${locationType.cityName || ""} ${
+                (locationType.type != "locality" && locationType.stateName) ||
+                ""
+              }` ||
+                "" ||
+                ""
+            )}
+          coursepagemetatitle={course?.meta_title
+            .replaceAll(
+              /(?:\{location\}|\{Location\}|\{royal defence \})/g,
+              `${locationType?.matchedItem?.title ? newLocation : "india"}`
+            )
+            .replaceAll(
+              /(?:\{State\}|\{state\}|\{royal defence \})/g,
+
+              `${locationType.cityName || ""} ${
+                (locationType.type != "locality" && locationType.stateName) ||
+                ""
+              }` ||
+                "" ||
+                ""
+            )}
+          title={randomTitle
+            .replaceAll(
+              /(?:\{location\}|\{Location\}|\{royal defence \})/g,
+              `${locationType?.matchedItem?.title ? newLocation : "india"}`
+            )
+            .replaceAll(
+              /(?:\{State\}|\{state\}|\{royal defence \})/g,
+
+              `${locationType.cityName || ""} ${
+                (locationType.type != "locality" && locationType.stateName) ||
+                ""
+              }` ||
+                "" ||
+                ""
+            )}
+        />
         <div className="bg-primary absolute w-full h-96  " />
         <div className=" md:px-3 mx-auto  md:py-10">
           {/* Course Header */}
@@ -247,6 +312,7 @@ const CourseDetail = ({ course, allCourses, reviewData, slug }: any) => {
 
           <Course_locations
             locations={course.city}
+            slug={course.slug}
             title={course?.title.replaceAll(
               /{location}|{Location}/g,
               locationdata?.title || "India"

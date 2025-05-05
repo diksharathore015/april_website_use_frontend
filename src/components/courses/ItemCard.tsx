@@ -13,6 +13,7 @@ import {
 import { useRouter } from "next/navigation";
 
 const ItemCard = ({ item, locationdata }: { item: any; locationdata: any }) => {
+  
   const placeholderImage = "/placeholder.png";
   console.log("itemcard", item);
   const router = useRouter();

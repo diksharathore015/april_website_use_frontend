@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import Image from "next/image";
 import React from "react";
 
 export default function StudentDetail({ studentData }: any) {
@@ -42,7 +43,9 @@ export default function StudentDetail({ studentData }: any) {
         <div className="grid grid-cols-2 gap-4 mt-4">
           {studentData.image.map((img: any) => (
             <div key={img.id} className="rounded-lg overflow-hidden shadow-md">
-              <img
+              <Image 
+              width={200}
+              height={200}
                 src={img.file}
                 alt={img.alternative_test}
                 className="w-full h-40 object-cover"

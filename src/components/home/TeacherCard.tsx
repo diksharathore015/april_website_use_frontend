@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React from "react";
 
 interface TeacherCardProps {
@@ -23,7 +24,9 @@ const TeacherCard: React.FC<TeacherCardProps> = ({
   return (
     <div className="max-w-sm mx-auto h-full bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
       <div className="flex items-center justify-center bg-gray-100 p-4">
-        <img
+ <Image 
+              width={200}
+              height={200}
           src={profile_picture}
           alt={name}
           className="w-32 h-32 rounded-full object-cover"

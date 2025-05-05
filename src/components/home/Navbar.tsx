@@ -34,7 +34,7 @@ export default function Navbar({ courses }: any) {
               >
                 <Link
                   href={item.link}
-                  className="px-4 py-1 text-primary font-extrabold font-baskervville text-2xl hover:text-white hover:bg-primary rounded-lg transition"
+                  className="px-4 py-1 text-primary font-extrabold font- text-2xl hover:text-white hover:bg-primary rounded-lg transition"
                 >
                   {item.name}
                 </Link>
@@ -46,7 +46,7 @@ export default function Navbar({ courses }: any) {
                         key={subIndex}
                         target="_blank"
                         href={`/courses/${subItem.slug}`}
-                        className="block px-4 w-52 border-b py-2 text-primary hover:bg-primary hover:text-white transition"
+                        className=" block px-4 w-52 border-b py-2 text-primary  hover:bg-primary hover:text-white transition "
                       >
                         {subItem.title.replaceAll(/{location}|{Location}/g, "")}
                       </Link>

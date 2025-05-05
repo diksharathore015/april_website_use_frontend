@@ -2,9 +2,10 @@
 import Image from "next/image";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import React from "react";
+import React  from "react";
 
 export default function Reviews({ reviewData , locationdata}: any) {
+ 
   return (
     <div className="p-6 bg-gray-50">
       <div className="space-y-6">
@@ -21,9 +22,9 @@ export default function Reviews({ reviewData , locationdata}: any) {
                 </h2>
               </div>
               <p className="text-sm text-gray-500">
-                {review.created_at &&
-                  new Date(review.created_at).toLocaleDateString()}
-              </p>
+  {review.created_at &&
+    new Date(review.created_at).toISOString().split("T")[0]}
+</p>
             </div>
 
             {/* Rating */}

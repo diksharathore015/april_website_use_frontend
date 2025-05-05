@@ -8,9 +8,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import TeacherCard from "./TeacherCard";
-import { div } from "framer-motion/client";
 import FAQ from "./Faqs";
 import Facilities from "./Facilities";
+import { store } from "@/store";
+import { setShowForm } from "@/store/homepageSlice";
 const HomePage = ({
   review,
   instructors,
@@ -34,7 +35,7 @@ const HomePage = ({
     slidesToScroll: 1,
     autoplay: true,
   };
-  console.log("homepagedata", homepagedata);
+  // console.log("homepagedata", homepagedata);
   return (
     <div className="min-h-screen bg-gray-50 p-4">
       <header className="text-center py-10 bg-white">
@@ -42,7 +43,10 @@ const HomePage = ({
         <p className="mt-4 text-lg">
           Shaping future leaders with excellence and discipline.
         </p>
-        <button className="mt-6 px-6 py-2 bg-white text-[#6b0804] font-semibold rounded-lg hover:bg-gray-200">
+        <button
+          onClick={() => store.dispatch(setShowForm(true))}
+          className="mt-6 px-6 py-2 bg-white text-[#6b0804] font-semibold rounded-lg hover:bg-gray-200"
+        >
           Join Us
         </button>
       </header>
@@ -76,7 +80,9 @@ const HomePage = ({
               <div key={i} className="rounded-lg p-5 h-44 bg-gray-100 ">
                 <div className="bg-white p-3 h-40 ">
                   {" "}
-                  <p className="text-gray-600 italic">{item.review}</p>
+                  <p className="text-gray-600 italic line-clamp-4">
+                    {item.review}
+                  </p>
                   <p className="mt-4 flex justify-end items-center font-semibold">
                     <Image
                       src={item.image[0].file}
@@ -98,7 +104,6 @@ const HomePage = ({
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Faculties
         </h2>
-
         <div className="">
           <Slider {...settings2}>
             {instructors.map((item: any, i: any) => (

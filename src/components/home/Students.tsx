@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import Image from "next/image";
 import React from "react";
 import { FaFacebookF, FaInstagram, FaPhone } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa6";
@@ -35,7 +36,9 @@ export default function Students({ data }: any) {
               >
                 {/* Profile Image */}
                 <div className="relative w-40 h-40 mx-auto">
-                  <img
+                 <Image 
+                              width={200}
+                              height={200}
                     src={student.image || "https://via.placeholder.com/150"} // Fallback image
                     alt={student.name}
                     className="w-40 h-40 mx-auto rounded-full border-4 border-[#fff]"

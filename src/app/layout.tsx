@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
@@ -6,6 +7,8 @@ import Header from "@/components/home/Header";
 import Footer from "@/components/home/Footer";
 import { get } from "./actions/actions";
 import { Constants } from "./constants/urls";
+import MainForm from "@/components/home/MainForm"; 
+import Providers from "@/store/Providers";
 
 // Configure Geist Sans
 const geistSans = Geist({
@@ -38,17 +41,23 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const courses = await get(Constants.courses_title);
-  console.log("courses", courses);
+  
+  const seodata = await get(Constants.seo);
+
+   
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable}`}
     >
-      <body className="antialiased overflow-x-hidden">
-        <Header courses= {courses} />
-        {children}
-        <Footer />
-      </body>
+      <Providers>
+        <body className="antialiased overflow-x-hidden">
+          <Header courses={courses} seodata={seodata}/>
+          <MainForm coursesData={courses} />
+          {children}
+          <Footer />
+        </body>
+      </Providers>
     </html>
   );
 }

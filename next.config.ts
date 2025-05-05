@@ -9,7 +9,8 @@ const nextConfig: NextConfig = {
     domains: [         
       "127.0.0.1"  ,
      "43.204.144.192",
-      "rdabucket.s3.amazonaws.com"
+      "rdabucket.s3.amazonaws.com",
+      "13.203.78.165"
     ],
   }, 
   typescript: {
