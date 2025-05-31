@@ -6,13 +6,13 @@ import { get } from "../actions/actions";
 import { Constants } from "../constants/urls";
 import CoursePageCard from "@/components/courses/CoursePageCard";
 import { div } from "framer-motion/client";
-
+import jdata from "../../components/data/Jdata.json"
 export default async function page() {
-  const course_list: any = await get(Constants.course);
-  console.log("course_list", course_list);
+  // const course_list: any = await get(Constants.course);
+  console.log("course_list", jdata.courses);
   return (
     <div>
-      {course_list.map((item: any, idx: any) => (
+      {jdata.courses.map((item: any, idx: any) => (
         <div key={idx}>
           <CoursePageCard course={item} />
         </div>

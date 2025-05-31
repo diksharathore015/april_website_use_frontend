@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import React from "react";
 import jdata from "../../components/data/Jdata.json";
+import Link from "next/link";
 
 export default function OurCourses({}: any) {
-  const router = useRouter();
+  // const router = useRouter();
   const data2 = jdata.courses;
   console.log("data2data2", data2);
   return (
@@ -16,19 +17,17 @@ export default function OurCourses({}: any) {
           Courses At Royal defence Academy{" "}
         </h1>
         {data2.map((item: any, i: any) => (
-          <div
-            onClick={() => router.push(`courses/${item.slug}`)}
+          <Link
+           href={(`courses/${item.slug}`)}
             key={i}
             className="w-72 h-72 bg-secondary hover:cursor-pointer flex items-center justify-center flex-col transition-all duration-500  "
-          >
-            {" "}
-            <h2 className="text-white  md:text-2xl text-lg  text-center capitalize  font-playfair ">
+          > <h2 className="text-white  md:text-2xl text-lg  text-center capitalize  font-playfair ">
               {item.title.replaceAll(/{location}|{Location}/g, "")}
             </h2>
             <p className="text-center text-white text-xs p-3">
               {item?.short_description.replaceAll(/{location}|{Location}/g, "")}
             </p>
-          </div>
+          </Link>
         ))}
         {/* <div className="w-72 h-72 bg-secondary  flex items-center justify-center flex-col  ">
             {" "}

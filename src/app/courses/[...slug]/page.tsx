@@ -7,7 +7,7 @@ import Breadcrumbs from "@/components/home/Breadcrumbs";
 import React from "react";
 import jdata from "../../../components/data/Jdata.json";
 export async function generateMetadata({ params, searchParams }: any) {
-  const seo = await get(Constants.seo);
+  // const seo = await get(Constants.seo);
   // console.log("seo123", seo);
   const param = await params.slug[0];
   const slug = params.slug;
@@ -124,7 +124,7 @@ export async function generateMetadata({ params, searchParams }: any) {
 
     alternates: {
       canonical:
-        seo[0]?.canonical_url || "https://www.royaldefenceacademy.com/", // Replace with your default canonical URL
+      "https://www.royaldefenceacademy.com/", // Replace with your default canonical URL
     },
   };
 }

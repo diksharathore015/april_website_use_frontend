@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import React from "react";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
- import jdata from "../../components/data/Jdata.json"
+import jdata from "../../components/data/Jdata.json";
 export default function Footer() {
   return (
     <footer className="bg-primary text-white pb-10">
@@ -47,13 +47,25 @@ export default function Footer() {
         <div>
           <h3 className="text-lg font-semibold mb-3">Follow Us</h3>
           <div className="flex justify-center md:justify-start space-x-4">
-            <a href={jdata.contact_info.facebook_link}  target="__blank" className="text-white hover:text-blue-500">
+            <a
+              href={jdata.contact_info.facebook_link}
+              target="__blank"
+              className="text-white hover:text-blue-500"
+            >
               <FaFacebookF size={20} />
             </a>
-            <a href={jdata.contact_info.instagram_link}  target="__blank" className="text-white hover:text-pink-500">
+            <a
+              href={jdata.contact_info.instagram_link}
+              target="__blank"
+              className="text-white hover:text-pink-500"
+            >
               <FaInstagram size={20} />
             </a>
-            <a href={jdata.contact_info.contact_number}  target="__blank" className="text-white hover:text-green-500">
+            <a
+              href={jdata.contact_info.contact_number}
+              target="__blank"
+              className="text-white hover:text-green-500"
+            >
               <FaWhatsapp size={20} />
             </a>
           </div>
@@ -62,10 +74,14 @@ export default function Footer() {
         {/* Contact */}
         <div>
           <h3 className="text-lg font-semibold mb-3">Contact Us</h3>
+          <p className="text-sm text-gray-300">
+            Address: Major Bane Singh Colony, Khatipura, Jaipur
+          </p>
+          <p className="text-sm text-gray-300">Phone: 8278640248</p>
+          <p className="text-sm text-gray-300">WhatsApp: 8278640248</p>
           <p className="text-sm text-gray-300">Email: support@example.com</p>
-          <p className="text-sm text-gray-300">Phone: +123 456 7890</p>
           <a
-            href="tel:+1234567890"
+            href="tel:8278640248"
             className="inline-block mt-2 bg-white text-[#6b0804] px-4 py-2 rounded-md text-sm font-semibold hover:bg-gray-200"
           >
             Call Now

@@ -12,10 +12,12 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaTv, FaCertificate } from "react-icons/fa6";
 import { MdOutlineOndemandVideo, MdStarRate } from "react-icons/md";
 import { assets } from "@/app/constants/Appasets";
+import { store } from "@/store";
+import { setShowForm } from "@/store/homepageSlice";
 
 const CoursePageCard = ({ course }: any) => {
-  const title = course.title.replace("{location}", "india");
-  const description = course.description.replace("{location}", "india");
+  const title = course?.title.replace("{location}", "india");
+  const description = course?.description.replace("{location}", "india");
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -34,7 +36,7 @@ const CoursePageCard = ({ course }: any) => {
             {course?.title.replaceAll(/{location}|{Location}/g, "India")}
           </h1>
           <p className="text-gray-400 text-lg mt-2">
-            {course.short_description.replaceAll(
+            {course?.short_description.replaceAll(
               /{location}|{Location}/g,
               "India"
             )}
@@ -44,24 +46,24 @@ const CoursePageCard = ({ course }: any) => {
 
             <span className="text-gray-400 text-sm ml-2">
               <MdStarRate className="inline-block mb-2  text-yellow-400" /> (
-              {course.student_list ? course.student_list.length : 0} ratings){" "}
-              {course.student_list ? course.student_list.length : 0} students
+              {course?.student_list ? course?.student_list.length : 0} ratings){" "}
+              {course?.student_list ? course?.student_list.length : 0} students
             </span>
           </div>
           <p className="text-gray-400 text-sm mt-1">
             Created by{" "}
             <span className="text-white font-semibold">
-              {course.created_by || "Unknown Instructor"}
+              {course?.created_by || "Unknown Instructor"}
             </span>
           </p>
           <p className="text-gray-400 text-sm">
-            Last updated {course.last_updated || "N/A"} · English · English
+            Last updated {course?.last_updated || "N/A"} · English · English
             [Auto]
           </p>
 
           <div className="   t mt-6    justify-start">
             <Slider {...sliderSettings}>
-              {course.slider_images.map((img: any, idx: any) => (
+              {course?.slider_images?.map((img: any, idx: any) => (
                 <div key={idx} className="p-1">
                   <Image
                     src={img || assets.logo}
@@ -78,24 +80,34 @@ const CoursePageCard = ({ course }: any) => {
         <div className="bg-white px-3  shadow-lg">
           <Image
             src={
-              course.slider_images.length > 0
-                ? course.slider_images[0]
+              course?.slider_images.length > 0
+                ? course?.slider_images[0]
                 : assets.logo
             }
-            alt={course.title}
+            alt={course?.title}
             className="w-full h-60 object-contain"
             width={800}
             height={400}
           />
           <h2 className="text-2xl font-bold text-gray-800">
-            ₹{course.price || "N/A"}
+            ₹{course?.price || "N/A"}
           </h2>
-          <button className="w-full bg-purple-600 hover:bg-purple-700 text-gray-800 font-semibold py-2  mt-4">
+          <button
+            onClick={() => store.dispatch(setShowForm(true))}
+            className="w-full bg-purple-600 hover:bg-purple-700 text-gray-800 font-semibold py-2  mt-4"
+          >
             Enquire Now
           </button>
-          <button className="w-full capitalize bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2  mt-2">
-            call us
-          </button>
+          <div className="w-full mt-10   py-2 bg-gray-700 hover:bg-gray-800">
+            {" "}
+            <a
+              href={`tel:${course?.contact_number}`}
+              target="_blank"
+              className="w-full  md:px-40 text-center mt-10 mx-auto capitalize  bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2  "
+            >
+              call us
+            </a>
+          </div>
 
           <div className="mt-3 space-y-3">
             <h3 className="text-lg font-semibold text-gray-800">
@@ -104,7 +116,7 @@ const CoursePageCard = ({ course }: any) => {
             <ul className="text-gray-500 space-y-2">
               <li className="flex items-center space-x-2">
                 <MdOutlineOndemandVideo size={20} />
-                <span>{course.duration} </span>
+                <span>{course?.duration} </span>
               </li>
               <li className="flex items-center space-x-2">
                 <FaTv size={20} />

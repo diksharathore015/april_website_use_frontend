@@ -6,7 +6,7 @@ import StudentDetail from "@/components/students/Student_main";
 import React from "react";
 import jdata from "../../../components/data/Jdata.json";
 export default async function Page({ params }: { params: { slug: string[] } }) {
-  console.log("firstparams", await params.slug[0]);
+  // console.log("firstparams", await params.slug[0]);
   const param = await params.slug[0];
   // const data = await get(`${Constants.allstudentslist}/?slug=${param}`);
   const sData = jdata.studentData;

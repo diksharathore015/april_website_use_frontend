@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     };
     // Example: Forwarding the request to an external API
     // const apiUrl = "http://13.203.78.165:8002/enquiry/"; // Replace with your API URL
-    const apiUrl = "http://127.0.0.1:8000/enquiry/"; // Replace with your API URL
+    const apiUrl = "http://13.203.78.165:8000/enquiry/"; // Replace with your API URL
 
     
     const response = await fetch(apiUrl, {

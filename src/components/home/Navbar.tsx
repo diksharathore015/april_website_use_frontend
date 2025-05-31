@@ -82,6 +82,7 @@ export default function Navbar({}: any) {
               {menuItems.map((item, index) => (
                 <div key={index} className="relative">
                   <Link
+                    target="_blank"
                     href={item.link}
                     className="px-4 py-1 text-gray-700 hover:text-white hover:bg-primary rounded-lg transition"
                     onClick={() =>
@@ -96,7 +97,8 @@ export default function Navbar({}: any) {
                       {item.submenu.map((subItem: any, subIndex: any) => (
                         <Link
                           key={subIndex}
-                          href={subItem.slug}
+                          target="_blank"
+                          href={`/courses/${subItem.slug}`}
                           className="block px-4 py-2 text-primary hover:bg-primary hover:text-white transition"
                         >
                           {subItem.title.replaceAll(
