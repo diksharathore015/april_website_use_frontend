@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import React from "react";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
-
+ import jdata from "../../components/data/Jdata.json"
 export default function Footer() {
   return (
     <footer className="bg-primary text-white pb-10">
@@ -20,22 +21,22 @@ export default function Footer() {
           <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
           <ul className="text-sm text-gray-300 space-y-2">
             <li>
-              <a href="#" className="hover:underline">
+              <a href="/" className="hover:underline">
                 Home
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a href="courses" className="hover:underline">
                 Courses
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a href="contact" className="hover:underline">
                 Contact
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a href="about-us" className="hover:underline">
                 About Us
               </a>
             </li>
@@ -46,13 +47,13 @@ export default function Footer() {
         <div>
           <h3 className="text-lg font-semibold mb-3">Follow Us</h3>
           <div className="flex justify-center md:justify-start space-x-4">
-            <a href="#" className="text-white hover:text-blue-500">
+            <a href={jdata.contact_info.facebook_link}  target="__blank" className="text-white hover:text-blue-500">
               <FaFacebookF size={20} />
             </a>
-            <a href="#" className="text-white hover:text-pink-500">
+            <a href={jdata.contact_info.instagram_link}  target="__blank" className="text-white hover:text-pink-500">
               <FaInstagram size={20} />
             </a>
-            <a href="#" className="text-white hover:text-green-500">
+            <a href={jdata.contact_info.contact_number}  target="__blank" className="text-white hover:text-green-500">
               <FaWhatsapp size={20} />
             </a>
           </div>

@@ -1,76 +1,3 @@
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-// "use client";
-// import { useEffect, useState } from "react";
-// import { assets } from "@/app/constants/Appasets";
-// import Image from "next/image";
-// import { BiSearch } from "react-icons/bi";
-// import { BsInstagram } from "react-icons/bs";
-// import { FaFacebook, FaXTwitter, FaYoutube } from "react-icons/fa6";
-// import Navbar from "./Navbar";
-
-// export default function Header({courses}:any) {
-//   const [scrolled, setScrolled] = useState(false);
-
-//   useEffect(() => {
-//     const handleScroll = () => {
-//       const scrollThreshold = window.innerHeight * 0.05; // 20% of screen height
-//       setScrolled(window.scrollY > scrollThreshold);
-//     };
-
-//     window.addEventListener("scroll", handleScroll);
-//     return () => window.removeEventListener("scroll", handleScroll);
-//   }, []);
-
-//   return (
-//     <div>
-//       <div className="bg-primary text-white py-1 w-full text-center font-baskervville">
-//         Join best Sainik school coaching
-//       </div>
-//       <div
-//         className={`fixed w-full z-50 bg-white transition-all duration-300 ${
-//           scrolled ? "-mt-10" : ""
-//         }`}
-//       >
-//         <div className="w-full pb-4 flex justify-between items-center">
-//           <div className="px-3 flex items-end justify-start w-1/3">
-//             <div className="flex border-b border-primary w-fit">
-//               <input
-//                 type="text"
-//                 className=" placeholder-primary"
-//                 placeholder="Search course"
-//               />
-//               <BiSearch className="text-primary mb-1 hover:cursor-pointer" />
-//             </div>
-//           </div>
-//           <div className="w-1/3 flex justify-center">
-//             <div className="mx-auto flex justify-center">
-//               <Image
-//                 src={assets.logo}
-//                 alt="Royal Defence Academy"
-//                 width={60}
-//                 height={60}
-//                 className="w-20"
-//               />
-//               <div className="mt-3 tracking-wider font-bold font-playfair text-primary">
-//                 <span className="text-5xl tracking-wider font-bold font-playfair mt-4">
-//                   Royal
-//                 </span>
-//                 <br /> Defence Academy
-//               </div>
-//             </div>
-//           </div>
-//           <div className="w-1/3 flex justify-end gap-0 text-secondary">
-//             <FaFacebook className="text-primary w-10 h-5" />
-//             <BsInstagram className="text-primary w-10 h-5" />
-//             <FaXTwitter className="text-primary w-10 h-5" />
-//             <FaYoutube className="text-primary w-10 h-5" />
-//           </div>
-//         </div>
-//         <Navbar courses={courses} />
-//       </div>
-//     </div>
-//   );
-// }
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useEffect, useState } from "react";
@@ -82,33 +9,38 @@ import { FaFacebook, FaYoutube } from "react-icons/fa6";
 import Navbar from "./Navbar";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
-export default function Header({ courses, seodata }: any) {
+import jdata from "../../components/data/Jdata.json";
+export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollThreshold = window.innerHeight * 0.05; // 5% of screen height
+      const scrollThreshold = window.innerHeight * 0.05;
       setScrolled(window.scrollY > scrollThreshold);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   const router = useRouter();
+
   return (
     <div className="relative">
+      {/* Top Announcement Bar */}
       <div className="bg-primary text-white py-1 text-center font-baskervville text-sm">
         Join the best Sainik school coaching
       </div>
+
+      {/* Main Header Section */}
       <div
         className={`fixed w-full z-50 bg-white shadow-md transition-transform duration-300 ${
           scrolled ? "-translate-y-10" : ""
         }`}
       >
-        <div className="w-full flex items-center px-6 py-3">
-          {/* Left Section: Search */}
-          <div className="flex items-center w-1/3">
+        {/* Header Content */}
+        <div className="w-full flex flex-col md:flex-row items-center justify-between px-4 md:px-6 py-3 space-y-3 md:space-y-0">
+          {/* Search (Top on mobile, Left on desktop) */}
+          <div className="w-full md:w-1/3 flex justify-center md:justify-start">
             <div className="flex items-center border-b border-primary w-full max-w-md">
               <input
                 type="text"
@@ -122,54 +54,62 @@ export default function Header({ courses, seodata }: any) {
             </div>
           </div>
 
-          {/* Center Section: Logo */}
-          <div className="w-1/3 flex justify-center">
-            <div
-              className="flex items-center space-x-3"
-              onClick={() => router.push("/")}
-            >
-              <Image
-                src={assets.logo}
-                alt="Royal Defence Academy"
-                width={50}
-                height={50}
-                className="w-16"
-              />
-              <div className="tracking-wide text-primary">
-                <span className="text-3xl font-bold font-playfair">Royal</span>
-                <br />
-                <span className="text-lg font-semibold">Defence Academy</span>
-              </div>
+          {/* Logo (Center) */}
+
+          <div
+            className="flex items-center space-x-3 cursor-pointer"
+            onClick={() => router.push("/")}
+          >
+            <Image
+              src={assets.logo}
+              alt="Royal Defence Academy"
+              width={50}
+              height={50}
+              className="w-12 md:w-16"
+            />
+            <div className="tracking-wide text-primary text-center">
+              <span className="text-2xl md:text-3xl font-bold font-playfair">
+                Royal
+              </span>
+              <br />
+              <span className="text-sm md:text-lg font-semibold">
+                Defence Academy
+              </span>
+            </div>
+            <div className="md:hidden block">
+              {" "}
+              <Navbar />
             </div>
           </div>
 
-          {/* Right Section: Social Icons */}
-          <div className="w-1/3 flex justify-end gap-4 text-secondary">
-            <Link href={seodata[0].facebook_link} target="_blank">
+          {/* Social Icons (Bottom on mobile, Right on desktop) */}
+          <div className="w-full md:w-1/3 hidden md:flex justify-center md:justify-end gap-4">
+            <Link href={jdata.contact_info.facebook_link} target="_blank">
               <FaFacebook
-                className="text-primary hover:text-secondary cursor-pointer"
-                size={20}
-              />{" "}
-            </Link>
-
-            <Link href={seodata[0].instagram_link} target="_blank">
-              {" "}
-              <BsInstagram
-                className="text-primary hover:text-secondary cursor-pointer"
+                className="text-primary hover:text-secondary"
                 size={20}
               />
             </Link>
-            <Link href={seodata[0].youtube_link} target="_blank">
-              {" "}
+            <Link href={jdata.contact_info.instagram_link} target="_blank">
+              <BsInstagram
+                className="text-primary hover:text-secondary"
+                size={20}
+              />
+            </Link>
+            <Link href={jdata.contact_info.youtube_link} target="_blank">
               <FaYoutube
-                className="text-primary hover:text-secondary cursor-pointer"
+                className="text-primary hover:text-secondary"
                 size={20}
               />
             </Link>
           </div>
         </div>
-        {/* Navbar */}
-        <Navbar courses={courses} />
+
+        {/* Navigation Menu */}
+        <div className="md:block hidden">
+          {" "}
+          <Navbar />
+        </div>
       </div>
     </div>
   );

@@ -10,8 +10,9 @@ type FAQItem = {
 interface FAQProps {
   faqs: FAQItem[];
 }
+import Jdata from "../data/Jdata.json";
 
-const FAQ: React.FC<FAQProps> = ({ faqs }) => {
+const FAQ: React.FC<FAQProps> = ({}) => {
   // Track which FAQ is expanded
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
@@ -22,7 +23,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs }) => {
 
   return (
     <ul className="list-disc list-inside text-gray-600 max-w-full px-10 mx-auto space-y-4 py-3">
-      {faqs.map((item, i) => (
+      {Jdata.faqs.map((item, i) => (
         <div key={i} className="space-y-2">
           <div
             className="font-semibold text-lg cursor-pointer w-full flex items-center justify-between border-b-2 capitalize "

@@ -5,91 +5,47 @@ import { Constants } from "@/app/constants/urls";
 import CourseDetail from "@/components/courses/CourseDetail";
 import Breadcrumbs from "@/components/home/Breadcrumbs";
 import React from "react";
+import jdata from "../../../components/data/Jdata.json";
 export async function generateMetadata({ params, searchParams }: any) {
   const seo = await get(Constants.seo);
   // console.log("seo123", seo);
-  const slug = params.slug;
   const param = await params.slug[0];
+  const slug = params.slug;
+  console.log("paramparam", param);
+  const cData = jdata.courses;
+  const course: any = cData.find((c) => c.slug === param);
+  console.log("teststatic data ", course);
+  const courseData: any = await course;
 
+  console.log("cData", cData);
   const location = slug[1] || "";
-  const courseData = await get(`${Constants.course}/?slug=${param}`);
+  console.log("reviewDatalocation", slug, location, course?.city_list);
   const findMatchingState = () => {
-    const matchedState = courseData[0]?.state?.find(
-      (item: any) =>
-        decodeURIComponent(item?.state_name.toLowerCase()).replace(" ", "") ===
-        location
+    const matchedState = course?.state?.find(
+      (item: any) => decodeURIComponent(item.toLowerCase()) == location
     );
     if (matchedState)
       return {
         type: "state",
         matchedItem: matchedState,
-        title: matchedState.state_name,
+        title: matchedState,
       };
-    const matchedCity =
-      courseData &&
-      courseData[0]?.city?.find(
-        (item: any) =>
-          decodeURIComponent(item?.city_name.toLowerCase()).replace(" ", "") ===
-          location
-      );
-    // if (matchedCity) return { type: "city", matchedItem: matchedCity };
+
+    const matchedCity = course?.city_list?.find(
+      (item: any) => decodeURIComponent(item?.toLowerCase()) === location
+    );
     if (matchedCity) {
-      // Find the state that corresponds to this city.
-      // It is assumed that matchedCity.state holds the state ID.
-      const correspondingState = courseData[0]?.state.find(
+      const correspondingState = course?.state?.find(
         (state: any) => state.id === matchedCity.state
       );
-
       return {
         type: "city",
         matchedItem: matchedCity,
-        title: `${matchedCity.city_name} ${
-          correspondingState ? `, ${correspondingState.state_name}` : null
-        }  `,
+        title: `${matchedCity} `,
         stateName: correspondingState ? correspondingState.state_name : null,
       };
     }
-
-    const matchedLocality: any = courseData[0]?.locality.find(
-      (item: any) =>
-        decodeURIComponent(item?.locality_name.toLowerCase())
-          .replace(" ", "")
-          .replace("%20", "") ===
-        decodeURIComponent(
-          location.toLowerCase().replace(" ", "").replace("%20", "")
-        )
-    );
-
-    if (matchedLocality) {
-      // Assume each locality object has a "city" property containing the city ID
-      const correspondingCity = courseData.city.find(
-        (city: any) => city.id == matchedLocality.city
-      );
-      // console.log("correspondingCity", correspondingCity);
-      // Then find the state corresponding to the found city
-      const correspondingState = correspondingCity
-        ? courseData[0]?.states?.find(
-            (state: any) => state.id === correspondingCity.id
-          )
-        : null;
-
-      // console.log("correspondingstate", correspondingCity);
-      return {
-        type: "locality",
-        matchedItem: matchedLocality,
-        cityName: correspondingCity ? correspondingCity.title : null,
-        stateName: correspondingState ? correspondingState.title : "",
-        title: `${matchedLocality.title} ${
-          correspondingCity ? `, ${correspondingCity.city_name}` : null
-        } ${correspondingState ? `, ${correspondingState.state_name}` : ""}`,
-      };
-    }
-
-    return {
-      type: "none",
-
-      title: "india",
-    }; // Return null if no match is found
+    return { type: "none", title: "India" };
   };
 
   const locationdata: any = findMatchingState();
@@ -97,17 +53,17 @@ export async function generateMetadata({ params, searchParams }: any) {
   console.log("courseseo", courseData);
 
   return {
-    title: ` ${courseData[0]?.title.replaceAll(
+    title: ` ${course?.title.replaceAll(
       /(?:\{location\}|\{Location\})/g,
-      locationdata.title || `india`
+      locationdata?.title || `india`
     )}`,
     description: courseData[0]?.description.replaceAll(
       /(?:\{location\}|\{Location\})/g,
-      locationdata.title || `india`
+      locationdata?.title || `india`
     ),
     keywords: courseData[0]?.meta_keywords.replaceAll(
       /(?:\{location\}|\{Location\})/g,
-      locationdata.title || `india`
+      locationdata?.title || `india`
     ),
     charset: "utf-8",
     logo: {
@@ -120,7 +76,7 @@ export async function generateMetadata({ params, searchParams }: any) {
     openGraph: {
       title: courseData[0]?.title.replaceAll(
         /(?:\{location\}|\{Location\})/g,
-        locationdata.title || `india`
+        locationdata?.title || `india`
       ),
       description: courseData[0]?.description.replaceAll(
         /(?:\{location\}|\{Location\})/g,
@@ -129,7 +85,7 @@ export async function generateMetadata({ params, searchParams }: any) {
       url: "https://www.royaldefenceacademy.com/",
       siteName: `Home- ${courseData[0]?.title.replaceAll(
         /(?:\{location\}|\{Location\})/g,
-        locationdata.title || `india`
+        locationdata?.title || `india`
       )}`,
       type: "website", // or 'article', 'product', etc.
       images: [
@@ -140,7 +96,7 @@ export async function generateMetadata({ params, searchParams }: any) {
           alt:
             courseData[0]?.title.replaceAll(
               /(?:\{location\}|\{Location\})/g,
-              locationdata.title || `india`
+              locationdata?.title || `india`
             ) || "Default OG Image Alt",
         },
       ],
@@ -150,12 +106,12 @@ export async function generateMetadata({ params, searchParams }: any) {
       card: "summary large card",
       title: courseData[0]?.title.replaceAll(
         /(?:\{location\}|\{Location\})/g,
-        locationdata.title || `india`
+        locationdata?.title || `india`
       ),
       description:
         courseData[0]?.description.replaceAll(
           /(?:\{location\}|\{Location\})/g,
-          locationdata.title || `india`
+          locationdata?.title || `india`
         ) || "Default OG Image Alt",
       images: [courseData[0]?.slider_images[0]],
     },
@@ -175,60 +131,64 @@ export async function generateMetadata({ params, searchParams }: any) {
 export default async function Page({ params }: { params: { slug: string[] } }) {
   const param = await params.slug[0];
   const slug = params.slug;
-  const courseData = await get(`${Constants.course}/?slug=${param}`);
+
+  const cData = jdata.courses;
+  const course = [cData.find((c) => c.slug === param)];
+  // console.log("teststatic data ", course);
+  const courseData = await course;
   const allCourses = await get(`${Constants.courses_title}`);
   const reviewData = await get(
-    `${Constants.review}/?course_id=${courseData[0].id}`
+    `${Constants.review}/?course_id=${courseData[0]?.id}`
   );
-  // console.log("courseData", courseData);
+  console.log("reviewData", slug);
 
   // Extract organization data
-  const organization = {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    name: courseData[0].created_by || "Royal Defence Academy",
-    description:
-      courseData[0].description ||
-      "Best coaching for RIMC and Sainik School preparations",
-    url: "https://yourwebsite.com", // Replace with your actual website URL
-    logo: courseData[0].slider_images[0], // Using first slider image as logo
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: courseData[0].locality[0]?.locality_name || "Khatipura",
-      addressRegion: courseData[0].state[0]?.state_name || "Rajasthan",
-      addressCountry: "India",
-    },
-    telephone: courseData[0].contact_number || "6377871603",
-    sameAs: [
-      courseData[0].facebook_link,
-      courseData[0].instagram_link,
-      courseData[0].youtube_link,
-    ].filter(Boolean),
-    priceRange: courseData[0].price ? `₹${courseData[0].price}` : "₹5000",
-    offers: {
-      "@type": "Offer",
-      price: courseData[0].price || "5000",
-      priceCurrency: "INR",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5", // Assuming based on student reviews
-      reviewCount: courseData[0].student_list.length.toString(),
-    },
-    review: courseData[0].student_list.map((student: any) => ({
-      "@type": "Review",
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: student?.rating || "5",
-        bestRating: "5",
-      },
-      author: {
-        "@type": "Person",
-        name: student?.name,
-      },
-      reviewBody: student?.review || student?.detail,
-    })),
-  };
+  // const organization = {
+  //   "@context": "https://schema.org",
+  //   "@type": "EducationalOrganization",
+  //   name: courseData[0]?.created_by || "Royal Defence Academy",
+  //   description:
+  //     courseData[0]?.description ||
+  //     "Best coaching for RIMC and Sainik School preparations",
+  //   url: "https://yourwebsite.com", // Replace with your actual website URL
+  //   logo: courseData[0]?.slider_images[0], // Using first slider image as logo
+  //   address: {
+  //     "@type": "PostalAddress",
+  //     addressLocality: courseData[0]?.locality[0]?.locality_name || "Khatipura",
+  //     addressRegion: courseData[0]?.state[0]?.state_name || "Rajasthan",
+  //     addressCountry: "India",
+  //   },
+  //   telephone: courseData[0]?.contact_number || "6377871603",
+  //   sameAs: [
+  //     courseData[0]?.facebook_link,
+  //     courseData[0]?.instagram_link,
+  //     courseData[0]?.youtube_link,
+  //   ].filter(Boolean),
+  //   priceRange: courseData[0]?.price ? `₹${courseData[0]?.price}` : "₹5000",
+  //   offers: {
+  //     "@type": "Offer",
+  //     price: courseData[0]?.price || "5000",
+  //     priceCurrency: "INR",
+  //   },
+  //   aggregateRating: {
+  //     "@type": "AggregateRating",
+  //     ratingValue: "5", // Assuming based on student reviews
+  //     reviewCount: courseData[0]?.student_list.length.toString(),
+  //   },
+  //   review: courseData[0]?.student_list.map((student: any) => ({
+  //     "@type": "Review",
+  //     reviewRating: {
+  //       "@type": "Rating",
+  //       ratingValue: student?.rating || "5",
+  //       bestRating: "5",
+  //     },
+  //     author: {
+  //       "@type": "Person",
+  //       name: student?.name,
+  //     },
+  //     reviewBody: student?.review || student?.detail,
+  //   })),
+  // };
 
   return (
     <div>
@@ -253,10 +213,10 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
                 ""
             )}
         /> */}
-      <script
+      {/* <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
-      />
+      /> */}
       <CourseDetail
         slug={slug}
         course={courseData[0]}

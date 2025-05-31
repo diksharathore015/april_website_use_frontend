@@ -77,23 +77,23 @@ export async function generateMetadata({ params, searchParams }: any) {
     },
   };
 }
+import Jdata from "../components/data/Jdata.json";
 
 export default async function Home() {
-  const homepageCourse = await get(Constants.course);
-  const homepagestudents = await get(
-    `${Constants.studentslist}/?homepage=true`
-  );
+  // const homepageCourse = await get(Constants.course);
+  // const homepagestudents = await get(
+  //   `${Constants.studentslist}/?homepage=true`
+  // );
+  // console.log("homepagestudent ", homepageCourse);
+  const faqs = await Jdata.faqs;
+  const instructors = await Jdata.instructors;
+  const facilities = await Jdata.facilitiesData;
+  const homepagedata = await Jdata.homepagedata;
 
-  const bannersdata = await get(Constants.banners);
-  const faqs = await get(Constants.faqs);
-  const instructors = await get(Constants.instructors);
-  const facilities = await get(Constants.facilities);
-  const homepagedata = await get(Constants.homepagedata);
- 
   const reviewsnippt = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    itemListElement: homepagestudents.map((testimonial: any, index: any) => ({
+    itemListElement: Jdata.studentData.map((testimonial: any, index: any) => ({
       "@type": "ListItem",
       position: index + 1,
       item: {
@@ -109,52 +109,51 @@ export default async function Home() {
         },
         image: testimonial.image.map((img: any) => ({
           "@type": "ImageObject",
-          contentUrl: img.file,
-          caption: img.caption,
-          description: img.description,
-          alternateName: img.alternative_test,
+          contentUrl: img?.file,
+          caption: img?.caption,
+          description: img?.description,
+          alternateName: img?.alternative_test,
         })),
-        url: testimonial.youtube_link,
       },
     })),
   };
   const courseSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    itemListElement: homepageCourse.map((course: any, index: number) => ({
+    itemListElement: Jdata.courses.map((course: any, index: number) => ({
       "@type": "ListItem",
       position: index + 1,
       item: {
         "@type": "Course",
-        name: course.title.replace("{location}", ""),
-        description: course.description.replace("{location}", ""),
+        name: course?.title.replace("{location}", ""),
+        description: course?.description?.replace("{location}", ""),
         provider: {
           "@type": "Organization",
-          name: course.created_by || "Royal Defence Academy",
+          name: course?.created_by || "Royal Defence Academy",
           sameAs: [
-            course.youtube_link,
-            course.facebook_link,
-            course.instagram_link,
+            course?.youtube_link,
+            course?.facebook_link,
+            course?.instagram_link,
           ].filter(Boolean),
         },
-        ...(course.price && {
+        ...(course?.price && {
           offers: {
             "@type": "Offer",
-            price: course.price,
+            price: course?.price,
             priceCurrency: "INR",
           },
         }),
-        duration: course.duration,
-        ...(course.slider_images?.length > 0 && {
-          image: course.slider_images[0],
+        duration: course?.duration,
+        ...(course?.slider_images?.length > 0 && {
+          image: course?.slider_images[0],
         }),
-        ...(course.student_list?.length > 0 && {
+        ...(course?.student_list?.length > 0 && {
           aggregateRating: {
             "@type": "AggregateRating",
             ratingValue: "5", // Using highest rating from your data
-            ratingCount: course.student_list.length.toString(),
+            ratingCount: course?.student_list.length.toString(),
           },
-          review: course.student_list.map((student: any) => ({
+          review: course?.student_list.map((student: any) => ({
             "@type": "Review",
             reviewRating: {
               "@type": "Rating",
@@ -184,6 +183,7 @@ export default async function Home() {
     })),
   };
 
+  // console.log("homepageCoursehomepageCourse", homepageCourse);
   return (
     <div className="overflow-x-hidden">
       <script
@@ -199,19 +199,21 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}
       />
 
-      <Banner data={bannersdata} />
+      <Banner />
 
       <HomePage
-        review={homepagestudents}
+        // review={homepagestudents}
         instructors={instructors}
         faqs={faqs}
         facilities={facilities}
         homepagedata={homepagedata}
       />
-
-      <OurCourses data={homepageCourse} />
-
-      <Students data={homepagestudents} />
+      <OurCourses
+      // data={homepageCourse}
+      />
+      <Students
+      //  data={homepagestudents}
+      />
     </div>
   );
 }

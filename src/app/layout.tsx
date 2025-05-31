@@ -40,9 +40,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const courses = await get(Constants.courses_title);
+  // const courses = await get(Constants.courses_title);
   
-  const seodata = await get(Constants.seo);
+  // const seodata = await get(Constants.seo);
 
    
   return (
@@ -52,8 +52,10 @@ export default async function RootLayout({
     >
       <Providers>
         <body className="antialiased overflow-x-hidden">
-          <Header courses={courses} seodata={seodata}/>
-          <MainForm coursesData={courses} />
+          <Header />
+       
+          {/* <Header courses={courses} seodata={seodata}/> */}
+          <MainForm  />
           {children}
           <Footer />
         </body>

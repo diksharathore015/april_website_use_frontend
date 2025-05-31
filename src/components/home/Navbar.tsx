@@ -4,10 +4,13 @@ import { useState } from "react";
 import { BiMenu } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
 
-export default function Navbar({ courses }: any) {
+import Jdata from "../data/Jdata.json";
+export default function Navbar({}: any) {
   const [isOpen, setIsOpen] = useState(false);
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
 
+  const courses = Jdata.courses;
+  console.log("testcoursedata", courses);
   const menuItems = [
     { name: "Home", link: "/" },
     {
@@ -20,7 +23,7 @@ export default function Navbar({ courses }: any) {
   ];
 
   return (
-    <nav className="bg-white shadow-md w-full top z-50">
+    <nav className="bg-white  w-full top z-50">
       <div className="flex justify-center mx-auto px-4">
         <div className="flex justify-between items-center pb-2">
           {/* Desktop Menu */}
@@ -34,7 +37,7 @@ export default function Navbar({ courses }: any) {
               >
                 <Link
                   href={item.link}
-                  className="px-4 py-1 text-primary font-extrabold font- text-2xl hover:text-white hover:bg-primary rounded-lg transition"
+                  className="px-4 py-1 text-primary font-extrabold    text-2xl hover:text-white hover:bg-primary rounded-lg transition"
                 >
                   {item.name}
                 </Link>
@@ -68,7 +71,7 @@ export default function Navbar({ courses }: any) {
 
         {/* Mobile Menu Dropdown */}
         {isOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40">
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-[99999]">
             <div className="absolute top-0 right-0 w-64 bg-white h-full shadow-lg flex flex-col items-center py-10 space-y-6">
               <button
                 className="absolute top-4 right-4 text-gray-700"
@@ -89,7 +92,7 @@ export default function Navbar({ courses }: any) {
                   </Link>
                   {/* Submenu for "Courses" */}
                   {item.submenu && isCoursesOpen && (
-                    <div className="absolute left-0 mt-2 bg-white shadow-lg rounded-lg">
+                    <div className="absolute z-[999] w-36 left-0 mt-2 bg-white shadow-lg rounded-lg">
                       {item.submenu.map((subItem: any, subIndex: any) => (
                         <Link
                           key={subIndex}

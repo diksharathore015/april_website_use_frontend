@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
@@ -11,11 +12,18 @@ import {
   FaYoutube,
 } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
+import { store } from "@/store";
+import { setShowForm } from "@/store/homepageSlice";
 
 const ItemCard = ({ item, locationdata }: { item: any; locationdata: any }) => {
-  
   const placeholderImage = "/placeholder.png";
-  console.log("itemcard", item);
+  const nameToSlug = (name: any) => {
+    return name
+      .toLowerCase() // Convert to lowercase
+      .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
+      .trim() // Trim leading/trailing whitespace
+      .replace(/\s+/g, "-"); // Replace spaces with dashes
+  };
   const router = useRouter();
   return (
     <div className="flex border shadow-sm p-4 bg-white w-full">
@@ -26,7 +34,7 @@ const ItemCard = ({ item, locationdata }: { item: any; locationdata: any }) => {
           alt={item.image?.[0]?.alternative_text || "Academy image"}
           width={128}
           height={160}
-          onClick={() => router.push(`/students/${item.slug}/`)}
+          onClick={() => router.push(`/students/${nameToSlug(item.name)}/`)}
           className="object-cover w-full h-full hover:cursor-pointer "
         />
       </div>
@@ -99,7 +107,7 @@ const ItemCard = ({ item, locationdata }: { item: any; locationdata: any }) => {
 
           {/* Tags */}
           <div className="flex gap-2 mt-2 flex-wrap">
-            {item?.meta_keyWords.split(",").map((item: any, i: any) => (
+            {item?.meta_keyWords?.split(",").map((item: any, i: any) => (
               <span
                 key={i}
                 className="text-xs px-2 py-1 bg-gray-100  text-gray-400 border rounded"
@@ -118,7 +126,7 @@ const ItemCard = ({ item, locationdata }: { item: any; locationdata: any }) => {
           <button className="flex-1 flex items-center justify-center bg-white text-green-600 border text-sm py-2 rounded hover:text-white hover:bg-green-700">
             <FaWhatsapp className="mr-1" /> WhatsApp
           </button>
-          <button className="flex-1 flex items-center justify-center bg-blue-600 text-white text-sm py-2 rounded hover:bg-blue-700">
+          <button    onClick={() => store.dispatch(setShowForm(true))} className="flex-1 flex items-center justify-center bg-blue-600 text-white text-sm py-2 rounded hover:bg-blue-700">
             <BiMessageAltDetail className="mr-1" /> Send Enquiry
           </button>
         </div>

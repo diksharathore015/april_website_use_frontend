@@ -1,11 +1,13 @@
+"use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import React from "react";
 import { FaFacebookF, FaInstagram, FaPhone } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa6";
-
-export default function Students({ data }: any) {
+import jdata from "../../components/data/Jdata.json";
+export default function Students({}: any) {
   // Transform the data to match the required structure
+  const data = jdata.studentData;
   const students = data.map((student: any) => ({
     id: student.id,
     name: student.name,
@@ -29,16 +31,16 @@ export default function Students({ data }: any) {
         <div className="w-[80%] mx-auto px-4 pb-24 pt-24">
           {/* Student Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-6">
-            {students.map((student: any) => (
+            {students?.map((student: any, i: any) => (
               <div
-                key={student.id}
+                key={i}
                 className="relative bg-secondary p-4 rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 group"
               >
                 {/* Profile Image */}
                 <div className="relative w-40 h-40 mx-auto">
-                 <Image 
-                              width={200}
-                              height={200}
+                  <Image
+                    width={200}
+                    height={200}
                     src={student.image || "https://via.placeholder.com/150"} // Fallback image
                     alt={student.name}
                     className="w-40 h-40 mx-auto rounded-full border-4 border-[#fff]"
@@ -80,7 +82,7 @@ export default function Students({ data }: any) {
                 </div>
 
                 {/* Student Details */}
-                <h3 className="text-center mt-3 font-playfair text-3xl text-[#fff]">
+                <h3 className="text-center mt-3 capitalize font-playfair text-3xl text-[#fff]">
                   {student.name}
                 </h3>
                 <p className="text-sm text-white text-center mt-2 line-clamp-2">

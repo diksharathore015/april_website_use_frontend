@@ -1,12 +1,13 @@
 "use client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+// import { useRouter } from "next/navigation";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React from "react";
 
 const Course_locations = ({ locations, title, slug }: any) => {
-  console.log("Available Locations", locations);
-  const router = useRouter();
+  console.log("Available Locations", locations, slug);
+  // const router = useRouter();
 
   return (
     <div className="container mx-auto py-10 ">
@@ -14,20 +15,27 @@ const Course_locations = ({ locations, title, slug }: any) => {
         Available Locations
       </h1>
       <div className="flex flex-wrap gap-2">
-        {locations.map((location: any) => (
+        {locations?.map((location: any, i: any) => (
           <div
-            onClick={() => {
-              router.push(`/courses/${slug}/${location.city_name}`);
-            }}
-            key={location.id}
+            // onClick={() => {
+            //   router.push(`/courses/${slug}/${location.city_name}`);
+            // }}
+            key={i}
             className=" "
           >
             <div>
               {" "}
-              <h2 className="text-sm inline-block  text-gray-700 mb-2 capitalize">
-                {title} in {location?.city_name}{" "}
-                <span className="font-bold">|</span>
-              </h2>
+              <Link
+                target="__blank"
+                href={`/courses/${slug}/${location}`}
+                className="text-sm inline-block  text-gray-700 mb-2 capitalize"
+              >
+                {title?.replaceAll(
+                  /{location}|{Location}/g,
+                  location || "India"
+                )}{" "}
+                in {location} <span className="font-bold">|</span>
+              </Link>
             </div>
           </div>
         ))}

@@ -1,4 +1,5 @@
 "use client";
+import { assets } from "@/app/constants/Appasets";
 import Image from "next/image";
 import React from "react";
 
@@ -24,10 +25,10 @@ const TeacherCard: React.FC<TeacherCardProps> = ({
   return (
     <div className="max-w-sm mx-auto h-full bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
       <div className="flex items-center justify-center bg-gray-100 p-4">
- <Image 
-              width={200}
-              height={200}
-          src={profile_picture}
+        <Image
+          width={200}
+          height={200}
+          src={profile_picture || assets.logo}
           alt={name}
           className="w-32 h-32 rounded-full object-cover"
         />

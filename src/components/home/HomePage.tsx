@@ -12,13 +12,9 @@ import FAQ from "./Faqs";
 import Facilities from "./Facilities";
 import { store } from "@/store";
 import { setShowForm } from "@/store/homepageSlice";
-const HomePage = ({
-  review,
-  instructors,
-  faqs,
-  facilities,
-  homepagedata,
-}: any) => {
+import Jdata from "../data/Jdata.json"; 
+const HomePage = ({ faqs, facilities }: any) => {
+  const homepagedata = Jdata.homepagedata;
   const settings = {
     dots: true,
     infinite: true,
@@ -35,11 +31,14 @@ const HomePage = ({
     slidesToScroll: 1,
     autoplay: true,
   };
-  // console.log("homepagedata", homepagedata);
+  const instructors = Jdata.instructors;
+
   return (
     <div className="min-h-screen bg-gray-50 p-4">
       <header className="text-center py-10 bg-white">
-        <h1 className="text-4xl font-bold">Welcome to Royal Defence Academy</h1>
+        <h1 className="md:text-4xl text-2xl font-bold">
+          Welcome to Royal Defence Academy
+        </h1>
         <p className="mt-4 text-lg">
           Shaping future leaders with excellence and discipline.
         </p>
@@ -51,8 +50,8 @@ const HomePage = ({
         </button>
       </header>
 
-      <section className="py-10 px-4 bg-white">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+      <section className="md:py-10 py-5 px-4 bg-white">
+        <h2 className="md:text-2xl text-xl font-bold text-center text-gray-800 mb-6">
           {homepagedata[0].title}
         </h2>
         <p className="text-gray-600 text-justify leading-relaxed max-w-6xl mx-auto">
@@ -76,7 +75,7 @@ const HomePage = ({
         </h2>
         <div className="   ">
           <Slider {...settings}>
-            {review.map((item: any, i: number) => (
+            {Jdata.review.map((item: any, i: number) => (
               <div key={i} className="rounded-lg p-5 h-44 bg-gray-100 ">
                 <div className="bg-white p-3 h-40 ">
                   {" "}

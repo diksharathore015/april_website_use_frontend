@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 import { setFormSubmitted, setShowForm } from "@/store/homepageSlice";
 import { get } from "@/app/actions/actions";
 import { Constants } from "@/app/constants/urls";
-
+import jdata from "../../components/data/Jdata.json";
 export default function EnquiryForm({
   setShowFlyOut,
   coursesData,
@@ -148,7 +148,7 @@ export default function EnquiryForm({
             Choose Course(s)
           </label>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {coursesdata?.map((option: any, index: any) => (
+            {jdata?.courses?.map((option: any, index: any) => (
               <label
                 key={index}
                 className="flex items-center bg-gray-100 px-3 py-2 rounded-lg cursor-pointer shadow-sm hover:bg-gray-200"
@@ -156,12 +156,12 @@ export default function EnquiryForm({
                 <input
                   type="checkbox"
                   name="coaching"
-                  value={option.id}
-                  onChange={(e) => handleChange(e.target.value)}
+                  value={option?.id}
+                  onChange={(e) => handleChange(e?.target?.value)}
                   className="form-checkbox h-4 w-4 text-purple-600"
                 />
                 <span className="ml-3 text-sm text-gray-800 capitalize">
-                  {option?.title}
+                  {option?.title?.replaceAll("{location}", "")}
                 </span>
               </label>
             ))}

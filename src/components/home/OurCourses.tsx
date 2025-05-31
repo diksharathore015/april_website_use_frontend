@@ -2,9 +2,12 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React from "react";
+import jdata from "../../components/data/Jdata.json";
 
-export default function OurCourses({ data }: any) {
+export default function OurCourses({}: any) {
   const router = useRouter();
+  const data2 = jdata.courses;
+  console.log("data2data2", data2);
   return (
     <div className="relative max-w-7xl mx-auto">
       {/* <div className="bg-primary py-20 mt-72 "> */}
@@ -12,14 +15,14 @@ export default function OurCourses({ data }: any) {
         <h1 className="inline-block w-full text-2xl font-bold text-center text-gray-800 mb-6">
           Courses At Royal defence Academy{" "}
         </h1>
-        {data.map((item: any, i: any) => (
+        {data2.map((item: any, i: any) => (
           <div
             onClick={() => router.push(`courses/${item.slug}`)}
             key={i}
             className="w-72 h-72 bg-secondary hover:cursor-pointer flex items-center justify-center flex-col transition-all duration-500  "
           >
             {" "}
-            <h2 className="text-white  text-4xl text-center capitalize  font-playfair ">
+            <h2 className="text-white  md:text-2xl text-lg  text-center capitalize  font-playfair ">
               {item.title.replaceAll(/{location}|{Location}/g, "")}
             </h2>
             <p className="text-center text-white text-xs p-3">

@@ -1,17 +1,18 @@
+"use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import ItemCard from "./ItemCard";
 
 const StudentList = ({ data, locationdata }: any) => {
-  console.log("firstlocationdata", locationdata);
-  const richSnippets = data.map((item: any) => {
+  console.log("firstlocationdatadatadata", data);
+  const richSnippets = data?.map((item: any) => {
     return {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       name: "Royal Defence Academy",
-      image: item.image?.[0]?.file,
-      url: `https://rdajaipur.in/${item.slug}`,
-      telephone: item.contact_number,
+      image: item?.image?.[0]?.file,
+      url: `https://rdajaipur.in/${item?.slug}`,
+      telephone: item?.contact_number,
       address: {
         "@type": "PostalAddress",
         addressLocality: locationdata.title,
@@ -20,34 +21,34 @@ const StudentList = ({ data, locationdata }: any) => {
       },
       aggregateRating: {
         "@type": "AggregateRating",
-        ratingValue: item.rating || "5",
+        ratingValue: item?.rating || "5",
         reviewCount: "1",
       },
       review: {
         "@type": "Review",
         author: {
           "@type": "Person",
-          name: item.name,
+          name: item?.name,
         },
-        reviewBody: item.review,
+        reviewBody: item?.review,
       },
       description:
-        item.detail || "Best Sainik School, RIMC and RMS coaching center.",
-      sameAs: [item.youtube_link, item.facebook_link, item.instagram_link],
+        item?.detail || "Best Sainik School, RIMC and RMS coaching center.",
+      sameAs: [item?.youtube_link, item?.facebook_link, item?.instagram_link],
     };
   });
 
   console.log(JSON.stringify(richSnippets, null, 2));
   return (
     <div className="px-2 w-[100%] bg-white shadow-sm">
-      {richSnippets.map((item: any, i: any) => (
+      {richSnippets?.map((item: any, i: any) => (
         <script key={i} type="application/ld+json">
           {JSON.stringify(item)}
         </script>
       ))}
       <div className="space-y-4">
-        {data.map((item: any) => (
-          <div key={item.id}>
+        {data?.map((item: any , i:any) => (
+          <div key={i}>
             <ItemCard item={item} locationdata={locationdata} />
           </div>
         ))}

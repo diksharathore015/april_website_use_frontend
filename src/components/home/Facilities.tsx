@@ -16,8 +16,8 @@ type Facility = {
 interface FacilitiesProps {
   facilities: Facility[];
 }
-
-const Facilities: React.FC<FacilitiesProps> = ({ facilities }: any) => {
+import Jdata from "../data/Jdata.json";
+const Facilities: React.FC<FacilitiesProps> = ({}: any) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -26,6 +26,8 @@ const Facilities: React.FC<FacilitiesProps> = ({ facilities }: any) => {
     slidesToScroll: 1,
     autoplay: true,
   };
+  const facilities = Jdata.facilitiesData;
+  console.log("facilitiesData", facilities);
   return (
     <section className="py-12 px-6 bg-gray-100">
       <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
